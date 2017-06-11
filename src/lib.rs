@@ -28,6 +28,18 @@ mod problem28 {
     }
 }
 
+mod problem29 {
+    // Given a string, keep its capital letters:
+    // "Hello World!" -> "HW"
+    fn is_capital(&c: &char) -> bool {
+        c >= 'A' && c <= 'Z'
+    }
+
+    pub fn capitals(s:&str) -> String {
+        s.chars().filter(is_capital).collect()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     #[test]
@@ -48,5 +60,13 @@ mod tests {
         println!("flatten({:?}) = {:?}", s1, flatten(s1.clone()));
         assert_eq!(flatten(s1),
                    vec!["a", "b", "c", "d"])
+    }
+
+    #[test]
+    fn problem29() {
+        use problem29::capitals;
+        assert_eq!(capitals("HeLlO, WoRlD!"), "HLOWRD".to_owned());
+        assert_eq!(capitals("nothing"), "".to_owned());
+        assert_eq!(capitals("$#A(*&987Zf"), "AZ".to_owned());
     }
 }
