@@ -1,0 +1,6 @@
+[package]
+name = "fourclojure"
+version = "0.1.0"
+authors = ["Hessam Mehr <hessammehr@gmail.com>"]
+
+[dependencies]
