@@ -40,6 +40,22 @@ mod problem29 {
     }
 }
 
+mod problem30 {
+    pub fn deduped<T: PartialEq, I: Iterator<Item=T>>(mut i: I) -> Vec<T> {
+        let mut res: Vec<T> = Vec::new();
+        if let Some(mut old) = i.next() {
+            // res.push(old);
+            loop {
+                match i.next() {
+                    Some(new) => { if old != new { res.push(old); } old = new; }
+                    None => { res.push(old); break; }
+                }
+            }
+        }
+        res
+    }
+}
+
 #[cfg(test)]
 mod tests {
     #[test]
@@ -68,5 +84,14 @@ mod tests {
         assert_eq!(capitals("HeLlO, WoRlD!"), "HLOWRD".to_owned());
         assert_eq!(capitals("nothing"), "".to_owned());
         assert_eq!(capitals("$#A(*&987Zf"), "AZ".to_owned());
+    }
+
+    #[test]
+    fn problem30() {
+        use problem30::{deduped};
+        use std::iter::FromIterator;
+        println!("{:?}", deduped(vec![1, 1, 2, 3, 3, 2, 2, 3].iter()));
+        assert_eq!("Leroy" , String::from_iter(deduped("Leeeeeerrroyyy".chars()).into_iter()));
+
     }
 }
