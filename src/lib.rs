@@ -1,3 +1,5 @@
+#![feature(type_ascription)]
+
 mod problem27 {
     // palindrome detector for Strings
     pub fn palindrome(s: &str) -> bool {
@@ -41,7 +43,8 @@ mod problem29 {
 }
 
 mod problem30 {
-    pub fn deduped<T: PartialEq, I: Iterator<Item=T>>(mut i: I) -> Vec<T> {
+    use std::iter::FromIterator;
+    pub fn deduped<T: PartialEq, I: Iterator<Item=T>, F: FromIterator<T>>(mut i: I) -> F {
         let mut res: Vec<T> = Vec::new();
         if let Some(mut old) = i.next() {
             // res.push(old);
@@ -52,7 +55,7 @@ mod problem30 {
                 }
             }
         }
-        res
+        F::from_iter(res.into_iter())
     }
 }
 
@@ -89,9 +92,8 @@ mod tests {
     #[test]
     fn problem30() {
         use problem30::{deduped};
-        use std::iter::FromIterator;
-        println!("{:?}", deduped(vec![1, 1, 2, 3, 3, 2, 2, 3].iter()));
-        assert_eq!("Leroy" , String::from_iter(deduped("Leeeeeerrroyyy".chars()).into_iter()));
+        // println!("{:?}", vec![1, 1, 2, 3, 3, 2 2, 3].iter());
+        assert_eq!("Leroy" , deduped("Leeeeeerrroyyy".chars()): String);
 
     }
 }
